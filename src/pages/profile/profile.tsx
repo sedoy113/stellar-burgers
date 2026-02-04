@@ -1,41 +1,66 @@
+import { Preloader } from '@ui';
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
+import {
+  getUserThunk,
+  updateUserThunk
+} from '../../services/AsyncThunk/userThunk';
+import { isLoadingLogout } from '../../services/Slices/logoutSlice.slice';
+import {
+  getIsLoadingSelector,
+  getUserSelector
+} from '../../services/Slices/user.slice';
+import { useDispatch, useSelector } from '../../services/store';
 
 export const Profile: FC = () => {
-  /** TODO: взять переменную из стора */
-  const user = {
-    name: '',
-    email: ''
-  };
+  const userName = useSelector(getUserSelector)?.name ?? '';
+  const emailUser = useSelector(getUserSelector)?.email ?? '';
+  const isLogoutLoading = useSelector(isLoadingLogout);
+  const isUpdateloading = useSelector(getIsLoadingSelector);
+  const dispatch = useDispatch();
 
   const [formValue, setFormValue] = useState({
-    name: user.name,
-    email: user.email,
+    name: userName,
+    email: emailUser,
     password: ''
   });
 
   useEffect(() => {
-    setFormValue((prevState) => ({
-      ...prevState,
-      name: user?.name || '',
-      email: user?.email || ''
-    }));
-  }, [user]);
+    setFormValue((prevState) => {
+      if (
+        prevState.name.toLowerCase() === userName.toLowerCase() &&
+        prevState.email.toLowerCase() === emailUser.toLowerCase()
+      )
+        return prevState;
+
+      return {
+        ...prevState,
+        name: userName,
+        email: emailUser,
+        password: ''
+      };
+    });
+
+    if (!userName || !emailUser) {
+      dispatch(getUserThunk());
+    }
+  }, [userName, emailUser, dispatch]);
 
   const isFormChanged =
-    formValue.name !== user?.name ||
-    formValue.email !== user?.email ||
+    formValue.name !== userName ||
+    formValue.email !== emailUser ||
     !!formValue.password;
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+    dispatch(updateUserThunk(formValue));
   };
 
   const handleCancel = (e: SyntheticEvent) => {
     e.preventDefault();
     setFormValue({
-      name: user.name,
-      email: user.email,
+      name: userName,
+      email: emailUser,
       password: ''
     });
   };
@@ -47,15 +72,16 @@ export const Profile: FC = () => {
     }));
   };
 
-  return (
+  return isLogoutLoading ? (
+    <Preloader />
+  ) : (
     <ProfileUI
       formValue={formValue}
+      isLoading={isUpdateloading}
       isFormChanged={isFormChanged}
       handleCancel={handleCancel}
       handleSubmit={handleSubmit}
       handleInputChange={handleInputChange}
     />
   );
-
-  return null;
 };

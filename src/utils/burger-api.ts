@@ -1,7 +1,8 @@
-import { setCookie, getCookie } from './cookie';
-import { TIngredient, TOrder, TOrdersData, TUser } from './types';
+import { getCookie, setCookie } from './cookie';
+import { TIngredient, TOrder, TUser } from './types';
 
-const URL = process.env.BURGER_API_URL;
+export const URL =
+  process.env.BURGER_API_URL || 'https://norma.education-services.ru/api';
 
 const checkResponse = <T>(res: Response): Promise<T> =>
   res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
@@ -61,7 +62,7 @@ type TIngredientsResponse = TServerResponse<{
   data: TIngredient[];
 }>;
 
-type TFeedsResponse = TServerResponse<{
+export type TFeedsResponse = TServerResponse<{
   orders: TOrder[];
   total: number;
   totalToday: number;
@@ -72,7 +73,12 @@ type TOrdersResponse = TServerResponse<{
 }>;
 
 export const getIngredientsApi = () =>
-  fetch(`${URL}/ingredients`)
+  fetch(`${URL}/ingredients`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json'
+    }
+  })
     .then((res) => checkResponse<TIngredientsResponse>(res))
     .then((data) => {
       if (data?.success) return data.data;
@@ -99,7 +105,7 @@ export const getOrdersApi = () =>
     return Promise.reject(data);
   });
 
-type TNewOrderResponse = TServerResponse<{
+export type TNewOrderResponse = TServerResponse<{
   order: TOrder;
   name: string;
 }>;
@@ -204,7 +210,7 @@ export const resetPasswordApi = (data: { password: string; token: string }) =>
       return Promise.reject(data);
     });
 
-type TUserResponse = TServerResponse<{ user: TUser }>;
+export type TUserResponse = TServerResponse<{ user: TUser }>;
 
 export const getUserApi = () =>
   fetchWithRefresh<TUserResponse>(`${URL}/auth/user`, {

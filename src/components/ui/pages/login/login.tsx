@@ -1,11 +1,11 @@
-import { FC, useState } from 'react';
 import {
-  Input,
   Button,
+  Input,
   PasswordInput
 } from '@zlden/react-developer-burger-ui-components';
-import styles from '../common.module.css';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
+import styles from '../common.module.css';
 import { LoginUIProps } from './type';
 
 export const LoginUI: FC<LoginUIProps> = ({
@@ -64,7 +64,7 @@ export const LoginUI: FC<LoginUIProps> = ({
       </div>
       <div className={`${styles.question} text text_type_main-default pb-6`}>
         Забыли пароль?
-        <Link to={'/forgot-password'} className={`pl-2 ${styles.link}`}>
+        <Link to='/forgot-password' className={`pl-2 ${styles.link}`}>
           Восстановить пароль
         </Link>
       </div>
