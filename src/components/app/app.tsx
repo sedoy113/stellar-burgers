@@ -93,47 +93,17 @@ const App = () => {
             }
           />
 
-          <Route
-            path='/feed/:number'
-            element={
-              <Modal onClose={closeModal} title=''>
-                <OrderInfo />
-              </Modal>
-            }
-          />
-          <Route
-            path='/ingredients/:id'
-            element={
-              <Modal onClose={closeModal} title='Детали ингредиента'>
-                <IngredientDetails />
-              </Modal>
-            }
-          />
+          <Route path='/feed/:number' element={<OrderInfo />} />
+          <Route path='/ingredients/:id' element={<IngredientDetails />} />
           <Route
             path='/profile/orders/:number'
             element={
               <ProtectedRoute>
-                <Modal onClose={closeModal} title=''>
-                  <OrderInfo />
-                </Modal>
+                <OrderInfo />
               </ProtectedRoute>
             }
           />
-          {/* TODO: доделать модальное окно успешной регистрации после сдачи работы */}
 
-          {/* <Route
-            path='/register/success'
-            element={
-              onModal && (
-                <Modal
-                  title='Вы успешно зарегистрировались! Пожалуйста, выполните вход'
-                  onClose={closeModal}
-                >
-                  <SuccessModalButton />
-                </Modal>
-              )
-            }
-          /> */}
           <Route path='*' element={<NotFound404 />} />
         </Routes>
 
@@ -165,19 +135,6 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
-            {/* <Route
-              path='/register/success'
-              element={
-                onModal ? (
-                  <Modal
-                    title='Вы успешно зарегистрировались! Пожалуйста, выполните вход'
-                    onClose={() => dispatch(closeRegistrationSuccessModal())}
-                  >
-                    <SuccessModalButton />
-                  </Modal>
-                ) : null
-              }
-            /> */}
           </Routes>
         )}
       </div>

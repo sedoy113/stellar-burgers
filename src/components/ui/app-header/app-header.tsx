@@ -45,6 +45,7 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = React.memo(
             <NavLink
               className={classByActive}
               to={userName ? '/profile' : '/login'}
+              state={!userName ? { from: { pathname: '/profile' } } : undefined}
             >
               <p className='text text_type_main-default ml-2'>
                 {userName || 'Личный кабинет'}
