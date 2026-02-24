@@ -95,6 +95,9 @@ describe('Конструктор бургеров', () => {
     cy.get('[data-cy="constructor-bun-bottom"]').should('not.exist');
     cy.get('[data-cy="constructor-ingredient"]').should('have.length', 0);
     cy.get('[data-cy="constructor-price"]').should('contain', '0');
+
+    cy.clearLocalStorage();
+    cy.clearCookies();
   });
 
   it('должен перенаправлять на страницу логина если пользователь не авторизован', () => {
