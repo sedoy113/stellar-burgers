@@ -1,5 +1,6 @@
 import {
   reducer,
+  initialState,
   showRegistrationSuccessModal,
   closeRegistrationSuccessModal
 } from './register.slice';
@@ -7,12 +8,6 @@ import { registerThunk } from '../AsyncThunk/registerUserThunk';
 import { TUser } from '@utils-types';
 
 describe('registerSlice', () => {
-  const initialState = {
-    isLoading: false,
-    success: false,
-    hasError: '',
-    onModalopen: false
-  };
 
   const mockUser: TUser = {
     name: 'Новый пользователь',

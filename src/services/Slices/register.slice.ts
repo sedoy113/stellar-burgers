@@ -9,7 +9,7 @@ type IInitialState = {
   onModalopen?: boolean;
 };
 
-const initialState: IInitialState = {
+export const initialState: IInitialState = {
   isLoading: false,
   success: false,
   hasError: '',
@@ -56,7 +56,6 @@ export const registerSlice = createSlice({
         state.isLoading = false;
         state.hasError =
           action.error.message || 'Ошибка регистрации пользователя';
-        prompt(state.hasError);
       });
   }
 });

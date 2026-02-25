@@ -1,4 +1,4 @@
-import { reducer } from './autorizationSlice.slice';
+import { reducer, initialState } from './autorizationSlice.slice';
 import {
   autorizationThunk,
   resetPaswordThunk
@@ -6,13 +6,6 @@ import {
 import { TUser } from '@utils-types';
 
 describe('autorizationSlice', () => {
-  const initialState = {
-    isLoading: false,
-    success: false,
-    hasError: '',
-    isAuthCheck: false,
-    user: undefined
-  };
 
   const mockUser: TUser = {
     name: 'Иван',
