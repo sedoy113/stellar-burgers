@@ -13,7 +13,7 @@ type IInitialState = {
   user: TUser | undefined;
 };
 
-const initialState: IInitialState = {
+export const initialState: IInitialState = {
   isLoading: false,
   success: false,
   hasError: '',
